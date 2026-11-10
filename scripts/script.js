@@ -1,3 +1,10 @@
+//IDEAS IF TIME PERMITS
+//Full on money/betting system. Buy in, bet amounts, etc
+//chip animation with canvas?
+
+
+
+
 class Player {
   constructor(buyIn) {
     this.hand = [];
@@ -47,14 +54,77 @@ function getRandomCard(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+
 const dealerDeck = [];
 const playerDeck = [];
 
-//this doesnt work
-const cardsLeft = deck.length;
 
-function drawCard() {
-    let cardDrawn = deck.splice(getRandomCard(0, cardsLeft), 1);
-    playerDeck.push(cardDrawn);
+//draw card function
+
+//my initial
+// function drawCard(hand) {
+//     const cardsLeft = deck.length;
+//     let cardDrawn = deck.splice(getRandomCard(0, cardsLeft), 1);
+//     playerDeck.push(cardDrawn);
+// }
+
+//me tweaking my initial:
+function drawCard(hand) {
+    const cardsLeft = (deck.length - 1);
+    const [cardDrawn] = deck.splice(getRandomCard(0, cardsLeft), 1);
+    hand.push(cardDrawn);
 }
 
+//claudes idea
+// function drawCard(hand) {
+//   const index = getRandomCard(0, deck.length - 1); // was deck.length, which can go 1 past the end
+//   const [card] = deck.splice(index, 1);            // splice returns an array, so unwrap it
+//   hand.push(card);
+// }
+
+//Convert hand array to card value
+
+function getCardValue(card) {
+  const cardValue = card[0]; 
+  if (cardValue === 'A') {
+    return 11;
+  } else if (cardValue === 'J' || cardValue === 'Q' || cardValue === 'K') {
+    return 10;
+  }
+  else return cardValue;
+}
+
+//used claude to help me adjust for aces when above 21
+function getHandValue(hand) {
+  let total = 0;
+  let aces = 0;
+
+  for (let i = 0; i < hand.length; i++) {
+    total += getCardValue(hand[i]);
+    if (hand[i][0] === 'A') aces++;
+  }
+
+  while (total > 21 && aces > 0) {
+    total -= 10;
+    aces --;
+  }
+
+
+  return total;
+}
+
+// display
+
+const playerTotalDisplay = document.getElementById("your-total");
+const dealerTotalDisplay = document.getElementById("dealer-total");
+// playerTotalDisplay.textContent = "10"
+
+
+// buttons
+
+const hitButton = document.getElementById("hit-button");
+hitButton.addEventListener("click", function () {
+  drawCard(playerDeck);
+  playerTotalDisplay.textContent = getHandValue(playerDeck);
+  console.log(playerDeck)
+})
