@@ -3,3 +3,11 @@ body {
     font-size: 1.3rem;
     text-align: center;
 }
+
+.start-button {
+    display: none;
+}
+
+/* .gameplay-button {
+    display: none;
+} */

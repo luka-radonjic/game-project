@@ -121,10 +121,69 @@ const dealerTotalDisplay = document.getElementById("dealer-total");
 
 
 // buttons
+const gameplayButtons = document.querySelectorAll(".gameplay-button");
+const startButton = document.getElementById("start-button");
+
+const winCondition = function () {
+  if (getHandValue(playerDeck) > 21) {
+    console.log("You Busted! Dealer Wins!");
+    gameplayButtons.forEach(button => button.disabled = true);
+  } else if (getHandValue(dealerDeck) > 21) {
+    console.log("Dealer Busted! You Win!");
+    gameplayButtons.forEach(button => button.disabled = true);
+  } else if (getHandValue(playerDeck) > getHandValue(dealerDeck) && hitButton.disabled === true) {
+    console.log("You Win!");
+    gameplayButtons.forEach(button => button.disabled = true);
+  } else if (getHandValue(playerDeck) < getHandValue(dealerDeck) && hitButton.disabled === true) {
+    console.log("Dealer Wins!");
+    gameplayButtons.forEach(button => button.disabled = true);
+  } else if (getHandValue(playerDeck) === getHandValue(dealerDeck) && hitButton.disabled === true) {
+    console.log("Push! It's a tie!");
+    gameplayButtons.forEach(button => button.disabled = true);
+  }
+}
+
 
 const hitButton = document.getElementById("hit-button");
 hitButton.addEventListener("click", function () {
   drawCard(playerDeck);
   playerTotalDisplay.textContent = getHandValue(playerDeck);
-  console.log(playerDeck)
+  console.log("Your Hand:",playerDeck)
+  winCondition();
+})
+
+//stand button
+
+const standButton = document.getElementById("stand-button");
+standButton.addEventListener("click", function () {
+  console.log("You Stand");
+  // disables buttons when player stands, this lets the win condition function check if you have stood
+  gameplayButtons.forEach(button => button.disabled = true);
+  while (getHandValue(dealerDeck) < 17) {
+    drawCard(dealerDeck);
+    dealerTotalDisplay.textContent = getHandValue(dealerDeck);
+  }
+  winCondition();
+})
+
+gameplayButtons.forEach(button => button.style.display = "none");
+startButton.style.display = "inline-block";
+
+// start button
+startButton.addEventListener("click", function () {
+  gameplayButtons.forEach(button => button.style.display = "inline-block");
+  startButton.style.display = "none";
+  drawCard(playerDeck);
+  drawCard(playerDeck);
+  drawCard(dealerDeck);
+  drawCard(dealerDeck);
+  playerTotalDisplay.textContent = getHandValue(playerDeck);
+  dealerTotalDisplay.textContent = getHandValue(dealerDeck);
+  if (getHandValue(playerDeck) === 21 && getHandValue(dealerDeck) !== 21) {
+    console.log("Blackjack! You Win!");
+    gameplayButtons.forEach(button => button.disabled = true);
+  } else if (getHandValue(playerDeck) === 21 && getHandValue(dealerDeck) === 21) {
+    console.log("Push! It's a tie!");
+    gameplayButtons.forEach(button => button.disabled = true);
+  }
 })
