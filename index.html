@@ -8,6 +8,7 @@
     <script src="scripts/script.js" defer></script>
   </head>
   <body>
+    <div class="site-wrapper">
     <header>
       <h1>Blackjack</h1>
     </header>
@@ -27,7 +28,12 @@
         <img src="" alt="" />
       </div>
       <span> Your Total: </span>
-      <span id="your-total"> 0 </span>
+      <span id="your-total">0 </span>
+      <span> Money: $</span>
+      <span id="money-total"> 0 </span>
+      <span> Bet: $</span>
+      <span id="bet-size"> 0 </span>
+
       <div class="all-button-container">
         <button class="start-button" id="start-button">
           <p>Deal</p>
@@ -44,7 +50,10 @@
         <button class="gameplay-button" id="split-button">
           <p>Split</p>
         </button>
+        <button class="bet-size-button" id="bet-size-button">
+          <p>Adjust Bet</p>
       </div>
     </body>
+    </div>
   </body>
 </html>

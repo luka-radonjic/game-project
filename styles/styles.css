@@ -1,13 +1,22 @@
 body {
-    background-color: #35654d;
+    background-color: rgb(233, 165, 87) ;
     font-size: 1.3rem;
     text-align: center;
+    /* display: grid;
+    grid-template-columns: 1fr; */
 }
 
-.start-button {
-    display: none;
+.site-wrapper {
+        /* display: grid;
+        grid-template-columns: 1fr; */
+    border: 5px solid black;
+    margin: 3rem;
+    background-color: #35654d;
 }
 
-/* .gameplay-button {
-    display: none;
-} */
+.all-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem;
+}
